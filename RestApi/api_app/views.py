@@ -7,21 +7,36 @@ from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework import generics
 from rest_framework import viewsets
+from django_filters.rest_framework import DjangoFilterBackend
+from .pagination import samplePagination
 
 # Create your views here.
+
+# class functions simple way
+
+class class_simpleway(generics.ListCreateAPIView):
+    queryset = student.objects.all()
+    serializer_class = studentSerilizer
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['name', 'age']
+
+class class_simpleway_Detail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = student.objects.all()
+    serializer_class = studentSerilizer
 
 # viewset
 
 class studentViewSet(viewsets.ReadOnlyModelViewSet):
    
-    queryset = student.objects.all()
-    serializer_class = studentSerilizer
+        queryset = student.objects.all()
+        serializer_class = studentSerilizer
 
 
 class student_model_ViewSet(viewsets.ModelViewSet):
   
     queryset = student.objects.all()
     serializer_class = studentSerilizer
+    pagination_class = samplePagination
 
 
 # class based views
@@ -68,15 +83,7 @@ class StudentDetail(APIView):
 
 
 
-# class functions simple way
-class class_simpleway(generics.ListCreateAPIView):
-    queryset = student.objects.all()
-    serializer_class = studentSerilizer
 
-
-class class_simpleway_Detail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = student.objects.all()
-    serializer_class = studentSerilizer
 
 
 
